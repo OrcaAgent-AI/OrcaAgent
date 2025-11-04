@@ -496,26 +496,32 @@
             gap: var(--space-md);
             margin-top: var(--space-lg);
             grid-template-columns: 1fr;
+            justify-items: center;
+            align-items: stretch;
         }
         
         @media (min-width: 768px) {
             .features-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
                 gap: var(--space-lg);
+                max-width: 1400px;
+                margin-left: auto;
+                margin-right: auto;
             }
         }
         
         @media (min-width: 1024px) {
             .features-grid {
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                grid-template-columns: repeat(3, 1fr);
                 gap: var(--space-xl);
+                max-width: 1400px;
             }
         }
         
         .feature-card {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
-            padding: var(--space-lg);
+            padding: var(--space-md);
             border-radius: clamp(1rem, 3vw, 2rem);
             border: 1px solid var(--glass-border);
             box-shadow: 0 20px 40px var(--glass-shadow);
@@ -523,7 +529,21 @@
             position: relative;
             overflow: hidden;
             display: grid;
-            gap: var(--space-sm);
+            grid-template-rows: auto 1fr auto;
+            gap: var(--space-xs);
+            width: 100%;
+            max-width: 400px;
+            min-height: 240px;
+            align-items: start;
+            text-align: center;
+        }
+        
+        @media (min-width: 768px) {
+            .feature-card {
+                max-width: none;
+                min-height: 260px;
+                padding: var(--space-md) var(--space-sm);
+            }
         }
         
         .feature-card::before {
@@ -557,18 +577,36 @@
         
         .feature-card h3 {
             color: var(--text-light);
-            font-size: var(--font-xl);
+            font-size: var(--font-lg);
             font-weight: 600;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: var(--space-xs);
-            line-height: 1.3;
+            line-height: 1.2;
+            text-align: center;
+            width: 100%;
+            margin-bottom: var(--space-xs);
         }
         
         .feature-card p {
             font-size: var(--font-base);
             line-height: 1.6;
             color: var(--text-lighter);
+            text-align: center;
+            margin: 0;
+            align-self: start;
+        }
+        
+        /* CLI Tool 卡片特殊样式 - 只有代码块左对齐 */
+        .feature-card.cli-card {
+            align-items: center;
+        }
+        
+        /* Runner 卡片底部斜体文字 */
+        .feature-card p[style*="italic"] {
+            align-self: end;
+            margin-top: auto;
         }
         
         /* 代码块 - 移动端优化 */
@@ -576,15 +614,17 @@
             background: rgba(0, 10, 20, 0.8);
             backdrop-filter: blur(10px);
             color: #00ff88;
-            padding: var(--space-md);
+            padding: var(--space-sm);
             border-radius: clamp(0.5rem, 2vw, 1rem);
             font-family: 'Courier New', monospace;
             overflow-x: auto;
-            margin: var(--space-md) 0;
+            margin: var(--space-sm) 0;
             border: 1px solid rgba(0, 255, 255, 0.2);
-            font-size: clamp(0.75rem, 2.5vw, 1rem);
-            line-height: 1.6;
+            font-size: clamp(0.7rem, 2.2vw, 0.9rem);
+            line-height: 1.4;
             box-shadow: 0 0 20px rgba(0, 255, 255, 0.1), inset 0 0 20px rgba(0, 255, 255, 0.05);
+            text-align: left;
+            align-self: end;
             
             /* 移动端滚动优化 */
             -webkit-overflow-scrolling: touch;
@@ -654,29 +694,67 @@
         
         /* 徽章系统 */
         .badge {
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             background: rgba(255, 255, 255, 0.2);
             color: var(--text-light);
-            padding: var(--space-xs) var(--space-sm);
-            border-radius: 2rem;
+            padding: 0 var(--space-sm);
+            border-radius: 1.5rem;
             font-size: var(--font-xs);
             font-weight: 500;
-            margin: var(--space-xs);
             backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
+            height: 30px;
+            text-align: center;
+            white-space: nowrap;
+            box-sizing: border-box;
+            width: 100%;
+            max-width: 150px;
+            transition: all 0.3s ease;
+        }
+        
+        /* 响应式调整 - 只针对小屏幕优化 */
+        @media (max-width: 767px) {
+            .badge {
+                height: 28px;
+                font-size: 0.8rem;
+                max-width: 130px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .badge {
+                height: 26px;
+                font-size: 0.75rem;
+                max-width: 110px;
+                padding: 0 var(--space-xs);
+            }
         }
         
         .badge-container {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: var(--space-xs);
             margin-top: var(--space-md);
-            justify-content: center;
+            justify-items: center;
+            align-items: center;
+            width: 100%;
+            align-self: end;
         }
         
-        @media (min-width: 768px) {
+        /* 小屏幕优化 - 减少间距 */
+        @media (max-width: 767px) {
             .badge-container {
-                justify-content: flex-start;
+                gap: 0.4rem;
+                margin-top: 0.75rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .badge-container {
+                gap: 0.3rem;
+                margin-top: 0.5rem;
             }
         }
         
@@ -1044,16 +1122,16 @@
                     <p style="margin-top: var(--space-md); color: var(--text-lighter); font-style: italic;">Focus on business logic while we handle the infrastructure.</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card cli-card">
                     <h3>🛠️ CLI Tool</h3>
                     <p>A comprehensive command-line interface that helps you quickly set up development environments and deploy agents to production.</p>
-                    <div class="code-block"># Install CLI
-pip install orcaagent-cli
+                    <div class="code-block"># Install CLI</br>
+pip install orcaagent-cli</br>
 
-# Create new project
-orcaagent new my-agent react
+# Create new project</br>
+orcaagent new my-agent react</br>
 
-# Start development server
+# Start development server</br>
 orcaagent dev</div>
                 </div>
             </div>
@@ -1074,21 +1152,19 @@ orcaagent dev</div>
                 
                 <div class="quick-start-step">
                     <h3>3. Configure Environment</h3>
-                    <div class="code-block"># Copy environment template
-cp .env.example .env
+                    <div class="code-block"># Copy environment template </br>
+cp .env.example .env</br>
 
-# Add your API keys
-ANTHROPIC_API_KEY=your-key-here
+# Add your API keys</br>
+ANTHROPIC_API_KEY=your-key-here</br>
 TAVILY_API_KEY=your-key-here</div>
                 </div>
                 
                 <div class="quick-start-step">
                     <h3>4. Start Development</h3>
-                    <div class="code-block"># Install dependencies
-pip install -e .
-
-# Start development server
-orcaagent dev</div>
+                    <div class="code-block">
+                        <p># Install dependencies<br>pip install -e .<br># Start development server<br>orcaagent dev</p>
+                    </div>
                 </div>
             </div>
         </section>
